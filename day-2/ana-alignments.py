@@ -21,13 +21,19 @@ parser.add_argument(
     help=('The starting position in the sequences.'))
 
 parser.add_argument(
-    '--stop', type=int, default=10,
+    '--stop', type=int, default=100,
     help=('The stop position in the sequences.'))
+
+parser.add_argument(
+    '--limit', type=int, default=0,
+    help=('Number of processed sequences.'))
+
 
 args = parser.parse_args()
 
 if args.verbose:
     print('OK, here we go.... working on file', args.file)
+
 
 alignment = AlignIO.read(args.file, 'fasta')
 
@@ -46,15 +52,26 @@ else:
             print('Error: start bigger than stop!')
             exit()
 
-
         #else:
             #for record in alignment:
                 #print("%s - %s" % (record.seq[args.start:args.stop], record.id))
 
+if args.limit < 0:
+    print('Error: limit negative!')
+    exit()
+
+
 firstRecord = True
-        
-for record in alignment:
+
+#To treat 0 as option to run all of the records
+recordProcessed = alignment[0:-1 if args.limit == 0 else args.limit]
+
+
+
+for record in recordProcessed:
+
     subseq = str(record.seq[args.start:args.stop])
+
 
     if firstRecord:
         nsString = 'N' * len(subseq)
@@ -69,6 +86,18 @@ for record in alignment:
         subsequences[subseq] += 1
     else:
         subsequences[subseq] = 1
+
+
+
+if len(subsequences) == 1:
+    print("All subsequences are same!")
+
+
+for subsequence in subsequences:
+    if len(subsequence) != args.stop - args.start:
+        print("Chosen subsequences length not suitable!")
+
+
 
 for subsequence, value in subsequences.items():
     print(subsequence[:50], value)

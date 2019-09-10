@@ -1,0 +1,141 @@
+Notes for programming course, 09.09.2019
+ 
+- We will be learning both Python and the shell
+
+Strg = Ctrl
+
+Step 1: Get a github.com account and send your username to Terry.
+
+BASH is a type of shell. "Command line" and "terminal" are basically synonyms for the shell.
+ 
+Unix commands
+N.B. Ubuntu is a flavor of Linux, which is a type of Unix.
+
+typing "date" shows the date.
+pressing Ctrl+L clears the BASH screen.
+typing "ls" shows the list of files in the current directory.
+typing "echo x" prints whatever x is. e.g. typing "echo hello", prints "hello".
+typing "pwd" prints the working directory. This is your current location in the tree.
+
+N.B. pay attention to slash directions. Windows uses \ whereas UNIX uses / to specify the directory.
+ 
+typing "cd" takes you home.
+typing "cd /home" specifies the destination as home. This is called an argument.
+typing "cd /" takes you to the top of the tree.
+typing "ls -l" is a long listing, which shows you even more detailed information than "ls" alone.
+typing "ls -l | less" runs the ls -l program in a way so that all the output is visible on one screen without the need for mouse scrolling.
+typing "|" is called a pipe. Pipes are metacharacters and indicate that the user is trying to connect two different programs.
+N.B. spaces around a pipe are optional.
+
+typing " " (space button) while the less program is running, pages forward and backward.
+The pipe takes the output of the first program and feeds it as the input into the second program.
+typing "q" is the command for qutting a running program and returning to the shell.
+
+pressing the up-arrow while on the command line recalls previous commands.
+pressing Ctrl+R allows you to search previous commands.
+
+
+pressing Ctrl+A takes you to the beginning of the line.
+pressing Ctrl+E takes you to the end of the line.
+pressing Ctrl+B takes you back a character.
+pressing Ctrl+F takes you forward a character
+pressing Ctrl+D deletes a character.
+pressing Alt+B takes you back a word.
+pressing Alt+F takes you forward a word.
+pressing Alt+D deletes a word.
+pressing Enter runs the command line.
+
+the word counting program is "wc" which outputs 3 numbers (lines, words, and characters including spaces).
+N.B. the wc program adds an extra character for creating a new line. So "abc" returns 4 characters.
+typing "wc -c" counts characters.
+typing "wc -l" counts lines.
+typing "wc -w" counts words.
+
+"grep" is a program that searches for patterns in files.
+e.g. "grep TextYouAreSearchingFor filename | less" shows you all the lines containing the desired text.
+e.g. "grep '>' xxx.fasta" will search the fasta file and only return lines containing '>'
+
+"cut" is a program that deletes certain characters.
+e.g. "Text Input | cut -f1 -d' ' | less" will cut the text after the first space, yielding "Text".
+
+"sort" is a program that sorts inputs.
+N.B. "sort" sorts inputs alphabetically, "sort -n" will sort files numercially.
+ 
+uniq is a program that provides only unique outputs.
+e.g. where less might provide 1,1,2,3 as outputs, uniq only provides 1,2,3 as an output, omitting the second 1.
+"uniq -c" will count the number of instances of each unique output.
+
+cp is a program which copies a file.
+
+"tail -n 1" shows only the final line of a file.
+"head" shows a file from the beginning.
+
+To access the manual, simply type man, followed by a command that you would like to learn more about.
+
+cat filename.py
+The above function returns the whole text of the filename in shell. cat is short for catenate.
+
+* is a wildcard, which allows you to pull down multiple matches with a part of their name in common.
+e.g. *.py returns all python files.
+
+typing "ls -lt" sorts files in the current directory by timestamp.
+
+mkdir makes a directory.
+
+To access your Windows directory from Ubuntu filesystem, use the following command:
+cd /mnt/c/Users/emanuelj/Desktop
+
+Python notes
+Variables can be strings ('text'), integers (1,2,3), Boolean variables (True or False), or floating numbers (2.13456373).
+Flow control methods include if/then statements, for example:
+
+x = 9
+if x > 8:
+	print("x is greater than 8.")
+else:
+	print("x is smaller than 8.")
+
+When the program above runs, "x is greater than 8." will be printed on the screen.
+
+To open a file in python, use the following command:
+x = open('filename.fasta')
+
+Then, you can iterate over the variable x, reading the file line by line (the following program would print every line of the file you opened):
+for line in x:
+	print(line)
+
+To read a file in python, use the following command:
+x = open('filename.fasta').read()
+This should save the entire file as a single variable.
+
+Lists are one type of data structure in python.
+shoppingList = ['milk','bread','butter']
+
+typing shoppingList[1] = 'bread'
+
+Sets are another type of data structure in python.
+names = set()
+names.add('Kyra')
+names.add('Julia')
+This returns a set {'Kyra','Julia'}
+
+Dictionaries are another data structure in python.
+ages = {}
+ages['Fabian'] = 28
+ages['Jackson'] = 26
+This returns a dictionary {'Fabian': 28, 'Jackson': 26}
+del ages[Jackson] would delete the Jackson value from the dictionary, returning only {'Fabian': 28}
+Dictionaries can also contain additional dictionaries, allowing you to nest dictionaries within each other.
+
+The .strip() function in python, cleans up empty spaces at the beginning and end of variables.
+
+The import function in python allows you to load additional packages of functions into python.
+
+For good programming practice, it's best to make your python programs as general as possible so they can accept multiple input types.
+This makes it easier to adjust the types of input in the shell, rather than changing the code each time in python.
+
+Standard Input (stdin), Standard Output, and Stardard Error will print to the terminal by default.
+
+In python,
+"x = x + 1" is such a common expression that there is also a shortcut:
+"x += 1" 

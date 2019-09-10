@@ -2,8 +2,6 @@
 
 The below will be expanded on during the course. It's far from complete.
 
-Deleted lines
-
 ## Description of course, aims, beliefs, etc.
 
 Broad range of students in the class. Help each other. Many of you came at

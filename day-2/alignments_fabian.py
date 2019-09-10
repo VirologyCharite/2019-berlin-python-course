@@ -52,8 +52,11 @@ if args.limit:
 else:
     print('No limit set.')
 
+print('')
 
-
+#if not args.stop:
+#    print('No stop defined')
+#    exit()
 
 if args.verbose:
     print('OK, here we go.... working on file', args.file)
@@ -107,6 +110,14 @@ for record in alignment:
             break
         else:
             print("%s - %s" % (record.seq[args.start:args.stop], record.id))
+    else:
+        print("%s - %s" % (record.seq[args.start:args.stop], record.id))
+        #without the second else command, no sequence alignment was printed
+        #if no limit was set
+
+print('')
 
 if len(dict_of_subsequences) == 1:
     print('All your sequences are the same!')
+
+print('')

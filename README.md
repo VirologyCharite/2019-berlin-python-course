@@ -1,5 +1,7 @@
 # An idealistic Python course
 
+The course will be in Berlin, Sept 9-13, 2019.
+
 The below will be expanded on during the course. It's far from complete.
 
 ## Description of course, aims, beliefs, etc.

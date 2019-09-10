@@ -31,4 +31,4 @@ if args.verbose:
 alignment = AlignIO.read(args.file, 'fasta')
 
 for record in alignment:
-    print("%-30s\t-\t%30s" % (record.seq[args.start:args.stop], record.id))
+    print("%s - %s" % (record.seq[args.start:args.stop], record.id))

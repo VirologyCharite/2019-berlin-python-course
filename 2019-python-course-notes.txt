@@ -1,4 +1,4 @@
-Notes for programming course, 09.09.2019
+Notes for programming course, 09.09.2019 (Day 1)
  
 - We will be learning both Python and the shell
 
@@ -139,3 +139,21 @@ Standard Input (stdin), Standard Output, and Stardard Error will print to the te
 In python,
 "x = x + 1" is such a common expression that there is also a shortcut:
 "x += 1" 
+
+Notes for programming course, 10.09.2019 (Day 2)
+
+Git is a version control system for updating documents.
+GitHub is an online service that provides document repositories (repos) for programmers to do collaborative projects online.
+
+Shell commands
+Alt+. recalls the last word from the previous command.
+"echo text >> filename.txt" is a way to append text to a file directly.
+"cd.." returns you to the parent directory.
+"cd." loads the current directory.
+"cd-" goes back to the previous directory.
+"git add ." adds the current directory to git.
+"git commit .m "first commit"" saves the data to git.
+Ctrl+T switches two letters.
+Alt+T switches two words.
+
+hello world

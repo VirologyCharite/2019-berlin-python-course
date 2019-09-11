@@ -27,15 +27,16 @@ parser.add_argument(
 
 parser.add_argument(
     '--limit', type=int, default=None,
-    help=('The limit of sequences being aligned.'))
+    help=('The maximum number of sequences being aligned.'))
 
-#arg.stop = parser.add_argument('--stop', type=int, default=10)
 
 
 args = parser.parse_args()
 
-if args.start > args.stop:
-    print('Do you want to count backwards? Fix your start and stop position!')
+print('')
+
+if args.start >= args.stop:
+    print('Fix your start and stop position!')
     exit()
 #else: print('Good news, everyone!')
 
@@ -48,9 +49,9 @@ if args.stop < 0:
     exit()
 
 if args.limit:
-    print('Limit is set to ' + str(args.limit) + '.')
+    print('Maximum number of sequences is set to ' + str(args.limit) + '.')
 else:
-    print('No limit set.')
+    print('No maximum number of sequences set.')
 
 print('')
 
@@ -66,30 +67,44 @@ if args.verbose:
 expected_value = args.stop - args.start
 #print(expected_value)
 
+#taking out the N strings from the library
+nsString = 'N' * expected_value
+
 alignment = AlignIO.read(args.file, 'fasta')
 
 #created library
 dict_of_subsequences = {}
 
 #creating a counter
-counter = 0
+record_counter = 0
+#be precise naming stuff like counters - what does if count?
 
 
 #takes values and puts them in the library by if statement
 for record in alignment:
-    counter += 1
+    subseq = str(record.seq[args.start:args.stop])
+    #added variable for records.seq to avoid pulling out the subsequences multiple times
+    record_counter += 1
+    #adding +1 per loop
     if args.limit:
-        if counter > args.limit:
+        if record_counter > args.limit:
             break
 
-    if len(record.seq[args.start:args.stop]) != expected_value:
+    if len(subseq) != expected_value:
         print('You exceeded the length of your sequence.')
         exit()
 
-    if record.seq[args.start:args.stop] in dict_of_subsequences:
-        dict_of_subsequences[record.seq[args.start:args.stop]] += 1
+    if subseq == nsString:
+        continue
+        #do not put it in library
+
+
+    if subseq in dict_of_subsequences:
+        dict_of_subsequences[subseq] += 1
+        #add one to counter
     else:
-        dict_of_subsequences[record.seq[args.start:args.stop]] = 1
+        dict_of_subsequences[subseq] = 1
+        #do not add one to counter
 
 
 #printing the name and the number of each entry
@@ -99,19 +114,25 @@ for key, value in dict_of_subsequences.items():
 
 print()
 
-counter = 0
+record_counter = 0
 
 print('Sequence alignment:')
 
 for record in alignment:
-    counter += 1
+    subseq = str(record.seq[args.start:args.stop])
+    #added variable for records.seq to avoid pulling out the subsequences multiple times
+    record_counter += 1
+
+    if subseq == nsString:
+        continue
+
     if args.limit:
-        if counter > args.limit:
+        if record_counter > args.limit:
             break
         else:
-            print("%s - %s" % (record.seq[args.start:args.stop], record.id))
+            print("%s - %s" % (subseq, record.id))
     else:
-        print("%s - %s" % (record.seq[args.start:args.stop], record.id))
+        print("%s - %s" % (subseq, record.id))
         #without the second else command, no sequence alignment was printed
         #if no limit was set
 
@@ -119,5 +140,5 @@ print('')
 
 if len(dict_of_subsequences) == 1:
     print('All your sequences are the same!')
-
+    #length of a dictionary tell you how many things are in the library
 print('')

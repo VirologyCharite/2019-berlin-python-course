@@ -119,6 +119,7 @@ names.add('Kyra')
 names.add('Julia')
 This returns a set {'Kyra','Julia'}
 
+
 Dictionaries are another data structure in python.
 ages = {}
 ages['Fabian'] = 28
@@ -147,13 +148,41 @@ GitHub is an online service that provides document repositories (repos) for prog
 
 Shell commands
 Alt+. recalls the last word from the previous command.
+Ctrl+T switches two letters.
+Alt+T switches two words.
+
 "echo text >> filename.txt" is a way to append text to a file directly.
 "cd.." returns you to the parent directory.
 "cd." loads the current directory.
 "cd-" goes back to the previous directory.
-"git add ." adds the current directory to git.
-"git commit .m "first commit"" saves the data to git.
-Ctrl+T switches two letters.
-Alt+T switches two words.
 
-hello world
+"git add ." adds the current directory to git.
+"git add filename" adds a file to git.
+N.B. adding these files must be followed by a commit command.
+"git commit -m "first commit"" saves the data to git.
+"git clone https://github.come/repository_name" clones the repo to a local git directory (use for the first time).
+
+While in a git directory:
+"git push" saves the latest version to the git directory.
+"git pull" acquires the latest version from the git directory.
+"git status" returns the status of the git directory, i.e. if your local version is up-to-date.
+
+virtualenv is a virtual environment that simulates a computer within a directory.
+to activate the virtual environment, go to the correct directory and write "source env/bin/activate"
+to exit the virtual environment, write "deactivate"
+
+To select substrings in python:
+arbitrary_variable = 'askdcamsodkmcoqwmdv'
+arbitrary_variable[0] = 'a'
+arbitrary_variable[:5] = 'askdc'
+
+*********IMPORTANT FOR HOMEWORK***************
+For Biopython, by importing AlignIO, it requires a sequence alignment as an input file.
+Therefore, when calling a python program with an Align IO function, another syntax can be used to read the alignment file:
+alignments.py --file ../data/MERS.fasta --start 20 --stop 100
+This will select a sub-sequence between 20 and 100.
+
+hint: if you do the --limit hw task, you will need to implement a counter within the loop, followed by printing a summary outside of the loop.
+hint #2: for the task related to checking if sub-sequences are the same, use 'if len(dictionary) == 1:' because all entries in a dictionary are unique.
+
+

@@ -30,17 +30,33 @@ recordCount = 0
 
 pattern = re.compile(args.motif)
 
+summary = {}
+
 for record in SeqIO.parse(args.filename, 'fasta'):
 
     seq = str(record.seq)
 
+    if record.id in summary:
+        print('hey, sequence %s has already been seen!' % record.id)
+        exit()
+    else:
+        summary[record.id] = {
+            'positions': [],
+            'matchedText': [],
+        }
+
     for match in pattern.finditer(seq):
         if match is not None:
-            subsequence = match.group(0)
-            print('Found motif %r at position %d in sequence %s' %
-                  (subsequence, match.start(), record.id))
+            summary[record.id]['positions'].append(match.start())
+            summary[record.id]['matchedText'].append(match.group(0))
 
     recordCount += 1
 
     if recordCount == args.limit:
         break
+
+for seqId in summary:
+    print(seqId)
+    for index in range(len(summary[seqId]['positions'])):
+        print('  %5d: %s' % (summary[seqId]['positions'][index],
+                             summary[seqId]['matchedText'][index]))

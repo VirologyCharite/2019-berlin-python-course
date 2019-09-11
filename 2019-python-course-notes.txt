@@ -43,7 +43,9 @@ pressing Ctrl+D deletes a character.
 pressing Alt+B takes you back a word.
 pressing Alt+F takes you forward a word.
 pressing Alt+D deletes a word.
+
 pressing Enter runs the command line.
+pressing Ctrl+C interrupts a currently running program.
 
 the word counting program is "wc" which outputs 3 numbers (lines, words, and characters including spaces).
 N.B. the wc program adds an extra character for creating a new line. So "abc" returns 4 characters.
@@ -181,8 +183,88 @@ For Biopython, by importing AlignIO, it requires a sequence alignment as an inpu
 Therefore, when calling a python program with an Align IO function, another syntax can be used to read the alignment file:
 alignments.py --file ../data/MERS.fasta --start 20 --stop 100
 This will select a sub-sequence between 20 and 100.
+N.B. the file, start, and stop arguments are specified by the alignments.py program.
 
 hint: if you do the --limit hw task, you will need to implement a counter within the loop, followed by printing a summary outside of the loop.
 hint #2: for the task related to checking if sub-sequences are the same, use 'if len(dictionary) == 1:' because all entries in a dictionary are unique.
 
+
+Notes for programming course, 11.09.2019 (Day 3)
+
+Python notes
+Indentation is important in Python. After each if statement, the following lines must be indented.
+"continue" skips directly to the next cycle of an active loop, without exiting the loop entirely.
+"break" exits a loop entirely, so the program continues to read through the lines after the loop.
+"exit()" is a function to immediately stop running the current python program.
+
+Arguments defined through the python parser function can take two forms:
+--argument (e.g. --file, --limit, --start) are optional.
+argument (without dashes) is required.
+
+Python operator syntax
+!= not equal to
+== equal to
+>= greater than or equal to
+<= less than or equal to
+> greater than
+< less than
+= equal to (= only used for variable assignment! use == for if statements!)
+
+A common strategy for debugging programs is to include print() statements at specific points in your program, so you know certain lines of code were read.
+
+It's good practice to include annotation for every function you write (i.e. input parameters, output, etc).
+
+To define functions in python the following syntax is used:
+
+def Function(input_value):
+	output_value = x + input_value
+	return output_value
+
+Then refer to your function later.
+
+new_variable = Function(10) #This makes new_variable == 10 + x
+
+For loops will separate the specified input variable into discrete objects. For example,
+ 
+for char in 'string':
+	print(char)
+
+This program writes:
+'s'
+'t'
+'r'
+'i'
+'n'
+'g'
+
+for loops will also iterate over objects in a list.
+
+Biopython SeqRecords are a bit different:
+In general Bio.SeqIO.parse() is used to read in sequence files as SeqRecord objects, and is typically used with a for loop like this:
+
+from Bio import SeqIO
+for seq_record in SeqIO.parse("ls_orchid.fasta", "fasta"):
+    print(seq_record.id)
+    print(repr(seq_record.seq))
+    print(len(seq_record))
+
+To interrupt a program that running, press Ctrl+C.
+
+A regular expression (re) in python allows you to specify multiple possible values in python.
+In other words, a regular expression is a string containing metacharacters.
+e.g. find('A[AT]') would return the index for all 'AA' and 'AT' substrings.
+'^AA' searches for 'AA' at the beginning of the substring.
+'AA$' returns 'AA' at the end of the substring.
+'AG{3,7}A'
+'AG+A'
+'AG*A'
+
+re.compile(args.motif)
+This builds a finite-state machine that interprets input as regular expressions.
+Good way of searching for ambiguities in a sequence.
+
+utility scripts can be put in the bin, which can be put in the pathname ($PATH).
+
+
+ 
 

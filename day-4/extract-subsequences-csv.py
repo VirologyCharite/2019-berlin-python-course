@@ -2,7 +2,7 @@
 
 import argparse
 from Bio import SeqIO
-from six.moves.urllib.parse import quote
+from urllib.parse import quote
 from pprint import pprint
 
 from extractor import SubsequenceExtractor

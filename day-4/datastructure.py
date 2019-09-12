@@ -41,3 +41,22 @@ summary2 = [
     },
 
 ]
+
+
+
+daniela = {
+    (10, 20): [
+        {
+            'id': 'JK3537373',
+            'subsequence': 'GCGTT',
+        },
+        {
+            'id': 'K97973',
+            'subsequence': 'GTTGGGGGG',
+        },
+    ],
+
+    (30, 60): [
+    ],
+
+}

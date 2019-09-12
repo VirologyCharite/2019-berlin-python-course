@@ -3,6 +3,7 @@
 import argparse
 from Bio import SeqIO
 from six.moves.urllib.parse import quote
+from pprint import pprint
 
 from extractor import SubsequenceExtractor
 
@@ -100,7 +101,7 @@ if fmt == 'html':
 elif fmt == 'csv':
     printCSVHeader()
 
-# suumary = {}
+summary = {}
 
 for record in SeqIO.parse(args.filename, 'fasta'):
     if fmt == 'html':
@@ -116,10 +117,15 @@ for record in SeqIO.parse(args.filename, 'fasta'):
             else:
                 print('%s,%d,%d,%s' % (record.id, start, stop, subsequence))
 
-            # summary[(start, stop)] = {
-            #     'id': record.id,
-            #     'subsequence': subsequence,
-            # }
+            # Test if (start, stop) is in summary. If not, put it in with
+            # an empty list value.
+            if (start, stop) not in summary:
+                summary[(start, stop)] = []
+
+            summary[(start, stop)].append({
+                'id': record.id,
+                'subsequence': subsequence,
+            })
 
         else:
             print('%d %d %s' % (start, stop, subsequence))
@@ -129,3 +135,5 @@ for record in SeqIO.parse(args.filename, 'fasta'):
 
 if fmt == 'html':
     printHTMLFooter()
+elif fmt == 'csv':
+    pprint(summary)

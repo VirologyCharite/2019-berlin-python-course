@@ -2,7 +2,7 @@
 
 import argparse
 from Bio import SeqIO
-from urllib.parse import quote
+from six.moves.urllib.parse import quote
 
 from extractor import SubsequenceExtractor
 
@@ -84,17 +84,13 @@ def NCBISequenceLink(title, field=None, delim='|'):
     return '<a href="%s" target="_blank">%s</a>' % (
         NCBISequenceLinkURL(title, field, delim), title)
 
+
+printHeader()
+
 for record in SeqIO.parse(args.filename, 'fasta'):
+    print('<p>%s</p><ol>' % NCBISequenceLink(record.id))
     for start, stop, subsequence in extractor.extract(str(record.seq)):
-        print('start=%d, stop=%d, %s' % (start, stop, subsequence))
+        print('<li>start=%d, stop=%d, %s</li>' % (start, stop, subsequence))
+    print('</ol>')
 
-
-#printHeader()
-
-#for record in SeqIO.parse(args.filename, 'fasta'):
-    #print('<p>%s</p><ol>' % NCBISequenceLink(record.id))
-    #for start, stop, subsequence in extractor.extract(str(record.seq)):
-        #print('<li>start=%d, stop=%d, %s</li>' % (start, stop, subsequence))
-    #print('</ol>')
-
-#printFooter()
+printFooter()

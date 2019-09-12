@@ -4,19 +4,23 @@ import argparse
 from Bio import SeqIO
 from urllib.parse import quote
 
-from extractor import SubsequenceExtractor
+from extractor_fabian import SubsequenceExtractor
 
 
 parser = argparse.ArgumentParser(
     description=('Find motifs in sequences in a FASTA file.'))
 
 parser.add_argument(
-    'filename',
+    '--file',
     help='The alignment file.')
 
 parser.add_argument(
     '--offsetsFile', required=True,
     help='The file of offsets to extract.')
+
+parser.add_argument(
+    '--text', default=False, 
+    help= 'Converts text to HTML.')
 
 args = parser.parse_args()
 
@@ -84,17 +88,21 @@ def NCBISequenceLink(title, field=None, delim='|'):
     return '<a href="%s" target="_blank">%s</a>' % (
         NCBISequenceLinkURL(title, field, delim), title)
 
-for record in SeqIO.parse(args.filename, 'fasta'):
-    for start, stop, subsequence in extractor.extract(str(record.seq)):
-        print('start=%d, stop=%d, %s' % (start, stop, subsequence))
 
+if args.text == False:
 
-#printHeader()
+    for record in SeqIO.parse(args.file, 'fasta'):
+        for start, stop, subsequence in extractor.extract(str(record.seq)):
+            print('start=%d, stop=%d, %s' % (start, stop, subsequence))
 
-#for record in SeqIO.parse(args.filename, 'fasta'):
-    #print('<p>%s</p><ol>' % NCBISequenceLink(record.id))
-    #for start, stop, subsequence in extractor.extract(str(record.seq)):
-        #print('<li>start=%d, stop=%d, %s</li>' % (start, stop, subsequence))
-    #print('</ol>')
+else:
 
-#printFooter()
+    printHeader()
+
+    for record in SeqIO.parse(args.file, 'fasta'):
+        print('<p>%s</p><ol>' % NCBISequenceLink(record.id))
+        for start, stop, subsequence in extractor.extract(str(record.seq)):
+            print('<li>start=%d, stop=%d, %s</li>' % (start, stop, subsequence))
+        print('</ol>')
+
+    printFooter()

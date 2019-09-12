@@ -3,6 +3,7 @@
 import argparse
 from Bio import SeqIO
 from urllib.parse import quote
+from pprint import pprint
 
 from extractor import SubsequenceExtractor
 
@@ -18,13 +19,21 @@ parser.add_argument(
     '--offsetsFile', required=True,
     help='The file of offsets to extract.')
 
+parser.add_argument(
+    '--format', choices=('html', 'csv', 'text'), default='text',
+    help='The output format.')
+
 args = parser.parse_args()
 
 
 extractor = SubsequenceExtractor(args.offsetsFile)
 
 
-def printHeader():
+def printCSVHeader():
+    print('Sequence,Start,Stop,Subsequence')
+
+
+def printHTMLHeader():
     print('''
 <!DOCTYPE html>
 <html>
@@ -35,14 +44,14 @@ def printHeader():
 ''')
 
 
-def printFooter():
+def printHTMLFooter():
     print('''
     </div>
   </body>
 </html>
 ''')
 
-    
+
 def NCBISequenceLinkURL(title, field=None, delim='|'):
     """
     Given a sequence title, like
@@ -84,17 +93,47 @@ def NCBISequenceLink(title, field=None, delim='|'):
     return '<a href="%s" target="_blank">%s</a>' % (
         NCBISequenceLinkURL(title, field, delim), title)
 
+
+fmt = args.format
+
+if fmt == 'html':
+    printHTMLHeader()
+elif fmt == 'csv':
+    printCSVHeader()
+
+summary = {}
+
 for record in SeqIO.parse(args.filename, 'fasta'):
+    if fmt == 'html':
+        print('<p>%s</p><ol>' % NCBISequenceLink(record.id))
     for start, stop, subsequence in extractor.extract(str(record.seq)):
-        print('start=%d, stop=%d, %s' % (start, stop, subsequence))
+        if fmt == 'html':
+            print('<li>start=%d, stop=%d, %s</li>' %
+                  (start, stop, subsequence))
+        elif fmt == 'csv':
+            start += 1
+            if start == stop:
+                print('%s,%d,,%s' % (record.id, start, subsequence))
+            else:
+                print('%s,%d,%d,%s' % (record.id, start, stop, subsequence))
 
+            # Test if (start, stop) is in summary. If not, put it in with
+            # an empty list value.
+            if (start, stop) not in summary:
+                summary[(start, stop)] = []
 
-#printHeader()
+            summary[(start, stop)].append({
+                'id': record.id,
+                'subsequence': subsequence,
+            })
 
-#for record in SeqIO.parse(args.filename, 'fasta'):
-    #print('<p>%s</p><ol>' % NCBISequenceLink(record.id))
-    #for start, stop, subsequence in extractor.extract(str(record.seq)):
-        #print('<li>start=%d, stop=%d, %s</li>' % (start, stop, subsequence))
-    #print('</ol>')
+        else:
+            print('%d %d %s' % (start, stop, subsequence))
 
-#printFooter()
+    if fmt == 'html':
+        print('</ol>')
+
+if fmt == 'html':
+    printHTMLFooter()
+elif fmt == 'csv':
+    pprint(summary)

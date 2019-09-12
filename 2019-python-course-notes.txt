@@ -266,5 +266,54 @@ Good way of searching for ambiguities in a sequence.
 utility scripts can be put in the bin, which can be put in the pathname ($PATH).
 
 
+Notes for programming course, 12.09.2019 (Day 4)
+
+Python notes
+It is good practice to use 4 spaces, rather than tabs when coding in python.
+The range function is useful for counting in for loops.
  
+N.B. functions return NoneType, unless "return" or "yield" commands are used.
+
+functions are normally written with lowercase letters.
+classes are normally written with uppercase letters.
+
+class Bag:
+	"This is a class for bags."
+
+	def __init__(self, contents):
+		self.brand = 'Samsung'
+		self.contents = contents
+
+b = Bag(['apple','book'])
+
+print(b.brand)
+print(b.contents)
+
+Shell notes
+to return every line of the file containing the specified text:
+type "grep 'text' /filename"
+ 
+to return all lines except those containing only the specified text (regular expressions allow you to limit the specified selection):
+type "egrep -v '^text$' /filename"
+
+instead of printing the output of a pipeline, you may write the output into a file using "something | something > new_filename".
+
+Python notes
+classes can be easily stored in separate files in the same directory and accessed via "from filename import Class"
+
+python can try to catch exceptions. For example:
+
+for line in file.txt:
+	try:
+		start = int(line)
+	except ValueError:
+		start = function(line)
+
+In the above situation, python will try to make line into an integer.
+
+HTML notes
+Press Ctrl+U while in a webbrowser to view the source code for a webpage.
+
+
+In the case where line is not an integer, yielding a ValueError, python will now catch the exception proceeding with the code under "except ValueError:"
 

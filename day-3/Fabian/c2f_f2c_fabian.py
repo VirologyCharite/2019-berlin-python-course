@@ -15,9 +15,9 @@ parser.add_argument(
 args = parser.parse_args()
 
 if args.tempC:
-	fahrenheit = (int(args.tempC) * 9/5) + 32
-	print(str(args.tempC), '°C is', fahrenheit, '°F.')
+    fahrenheit = (int(args.tempC) * 9/5) + 32
+    print(str(args.tempC), '°C is', fahrenheit, '°F.')
 
 if args.tempF:
-	celsius = (int(args.tempF)-32) * 5/9
-	print(str(args.tempF), '°F is', celsius, '°C.')
+    celsius = (int(args.tempF)-32) * 5/9
+    print(str(args.tempF), '°F is', celsius, '°C.')

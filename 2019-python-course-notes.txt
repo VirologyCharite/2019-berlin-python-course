@@ -353,3 +353,52 @@ jupyter provides an ipython-like interface using a local webserver. This allows 
 The python module matplotlib allows you to generate graphs and plots from your data in a high-throughput manner.
 
 The python module pandas provides even more useful ways to interact with large datasets (e.g. read .csv or .xlsx files in one line of code).
+
+Shell notes
+
+An SSH (Secure Shell) key provides an encrypted way for your shell to exchange information on an open network like the internet.
+
+To manage multiple jobs in the shell at the same time, use an & after a command (such as opening jupyter) to leave it as a process running in the background.
+This allows you to run multiple processes simultaneously.
+ 
+To generate a new SSH key:
+ssh-keygen -t rsa -b 4096 -C "jackson.emanuel@gmail.com"
+
+SSH public and private key pairs, public key for encryption and private key for decryption.
+
+SSH keys allow you to access remote machines securely, accessing and editing documents.
+ 
+The shell has its own programming language. The convention is to name shell files as .sh files.
+
+When using the shell language, spaces around equal signs are not allowed.
+
+The "sed" command stands for stream editor, allowing you to substitute characters for one another.
+
+echo hello | sed -e 's/ll/xx/
+
+The above program yields 'hexxo' because sed replaced 'll' with 'xx'.
+
+The shell doesn't care about indentation, unlike python.
+
+Python notes
+
+For writing files, something like the following can be used:
+
+fp1 = open(args.filename1, 'w') #opens file in write mode
+
+for line in sys.stdin:
+	line = line.strip()
+	if line.find(args.pattern1) > -1:
+		print('Write %r to file %s' % (line, args.filename1))
+		print(line, file=fp1)
+
+fp1.close()
+
+To parse a .csv file, you can write your own code manually, but beware of potential errors (e.g. a comma in the middle of an entry)
+Therefore, using an already existing module function (like pandas.read_csv(args.filename)) is highly recommended.
+pandas.read_csv(args.filename) can interpret the .csv file into another type of data structure called a DataFrame.
+Pandas works well with jupyter as well.
+
+When you create classes in python, you can re-assign their fundamental properties, changing how they interact with mathematical operators.
+(e.g. by redefining the def __add__(): function)
+

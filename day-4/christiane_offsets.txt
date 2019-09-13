@@ -1,0 +1,15 @@
+# This is the offset of the delta32 mutation
+20000
+
+# Here is another offset pair.
+10-20
+
+300 - 500
+
+-4
+
+Three
+
+monday - tuesday
+
+-5 -8

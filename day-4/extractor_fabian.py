@@ -16,6 +16,9 @@ class SubsequenceExtractor:
                         start, stop = line.split('-')
                     except ValueError:
                         print('Could not parse line %r!' % origLine)
+                        # Alternatively:
+                        # raise ValueError('Error Message with more 
+                        # useful text')
                         continue
                     else:
                         try:
@@ -46,4 +49,6 @@ class SubsequenceExtractor:
     def extract(self, sequence):
         for start, stop in self.offsets:
             subsequence = sequence[start:stop]
-            yield (start, stop, subsequence)
+            if len(subsequence) == stop - start:
+                #otherwise stop is higher than sequence length
+                yield (start, stop, subsequence)

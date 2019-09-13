@@ -43,4 +43,8 @@ class SubsequenceExtractor:
     def extract(self, sequence):
         for start, stop in self.offsets:
             subsequence = sequence[start:stop]
-            yield (start, stop, subsequence)
+            # Make sure that the subsequence we extract is of the expected
+            # length. If not, we've probably hit the end of the sequence
+            # and we don't return this result.
+            if len(subsequence) == stop - start:
+                yield (start, stop, subsequence)

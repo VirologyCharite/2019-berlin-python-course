@@ -12,24 +12,22 @@ class SubsequenceExtractor:
                 try:
                     start = int(line)
                 except ValueError:
+
                     try:
                         start, stop = line.split('-')
                     except ValueError:
                         print('Could not parse line %r!' % origLine)
-                        # Alternatively:
-                        # raise ValueError('Error Message with more 
-                        # useful text')
                         continue
                     else:
                         try:
                             start = int(start)
                         except ValueError:
-                            print('Start is not a number.')
+                            print('Input not integer')
                             continue
-                        try:
+                        try:   
                             stop = int(stop)
                         except ValueError:
-                            print('Stop is not a number.')
+                            print('Input not integer')
                             continue
 
                 else:
@@ -37,18 +35,12 @@ class SubsequenceExtractor:
 
                 start -= 1
 
-                if stop - start < 0:
-                    print('Subsequence is smaller than 0.')
-                    exit()
+                # Error checking! Less than zero? start < stop?
 
-               
-
-                print('%s: %d %d' % (line, start, stop))
+                # print('%s: %d %d' % (line, start, stop))
                 self.offsets.append((start, stop))
 
     def extract(self, sequence):
         for start, stop in self.offsets:
             subsequence = sequence[start:stop]
-            if len(subsequence) == stop - start:
-                #otherwise stop is higher than sequence length
-                yield (start, stop, subsequence)
+            yield (start, stop, subsequence)

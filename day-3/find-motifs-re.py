@@ -24,6 +24,15 @@ parser.add_argument(
     '--limit', type=int,
     help='The maximum number of sequences to process.')
 
+parser.add_argument(
+    '--start', required=True,
+    help='The motif to look for in the sequences.')
+
+parser.add_argument(
+    '--stop', required=True,
+    help='The motif to look for in the sequences.')
+
+
 args = parser.parse_args()
 
 recordCount = 0

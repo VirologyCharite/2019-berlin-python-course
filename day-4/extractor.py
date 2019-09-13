@@ -9,19 +9,27 @@ class SubsequenceExtractor:
                 if not line or line.startswith('#'):
                     continue
 
-                try:
+                try: #branch1 check if the whole line is an integer
                     start = int(line)
-                except ValueError:
-
-                    try:
+                except ValueError: #the whole line is not an integer
+                    try: #check if there is a hyphen in the line
                         start, stop = line.split('-')
-                    except ValueError:
+                    except ValueError: #there is no hyphen, the input is unacceptable, close the program
                         print('Could not parse line %r!' % origLine)
-                    else:
-                        # Are they ints?  Error check.
-                        start = int(start)
-                        stop = int(stop)
-
+                        continue
+                    else: #there is a hyphen in the line, split into start and stop variables was successful
+                        try: #check if start is an integer
+                            start = int(start)
+                        except ValueError:
+                            print('Could not parse line %r!' % origLine)
+                            continue
+                        try: #check if stop is an integer
+                            stop = int(stop)
+                        except ValueError:
+                            print('Could not parse line %r!' % origLine)
+                            continue
+                        if start > stop:
+                            print('Invalid window selection, start is larger than stop %r!' % origLine)                            
                 else:
                     stop = start
 

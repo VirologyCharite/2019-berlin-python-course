@@ -20,7 +20,7 @@ parser.add_argument(
 
 parser.add_argument(
     '--text', default=False, type=bool,
-    help='The file will be exported in text format when any value is entered.')
+    help='The file will be exported in text format when any value is .')
 
 args = parser.parse_args()
 

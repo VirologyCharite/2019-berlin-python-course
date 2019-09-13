@@ -35,12 +35,21 @@ summary = []
 for record in SeqIO.parse(args.filename, 'fasta'):
 
     seq = str(record.seq)
+    entry_not_allowed = False
 
-    entry = {
-        'id': record.id,
-        'matches': [],
-    }
-
+    for dictionary in summary: 
+        if record.id in dictionary.values(): #this is a duplicate sequence, do not add a new entry
+            print("Hey! A duplicate entry was found and ignored. Duplicate was",record.id)
+            entry_not_allowed = True
+    #this is a new record.id, create a new entry
+    if entry_not_allowed == False:
+        entry = {
+            'id': record.id,
+            'matches': [],
+            }
+    else:
+        continue
+        
     for match in pattern.finditer(seq):
         if match is not None:
             position = match.start()

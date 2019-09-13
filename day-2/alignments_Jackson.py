@@ -4,6 +4,11 @@ import argparse
 import sys
 from Bio import AlignIO
 
+def allNs_v3(string):
+    for char in string:
+        if char != 'N':
+            return False
+    return True
 
 parser = argparse.ArgumentParser(
     description=())
@@ -49,7 +54,6 @@ if args.verbose:
 
 alignment = AlignIO.read(args.file, 'fasta')
 
-dictionary_of_sub_sequences = {}
 checker = ''
 replacer = ''
 
@@ -58,20 +62,24 @@ for char in range(0,expected_range):
     replacer = replacer + '.'
 
 counter = 0
+dictionary_of_sub_sequences = {}
+
 for record in alignment:
     counter += 1
+    subseq = str(record.seq[args.start:args.stop])
+
     if args.limit:
         if counter > args.limit:
             break
 
-    if len(record.seq[args.start:args.stop]) != expected_range:
+    if len(subseq) != expected_range:
         print('Error message: selected range invalid.')
         exit()    
 
-    if record.seq[args.start:args.stop] in dictionary_of_sub_sequences:
-        dictionary_of_sub_sequences[record.seq[args.start:args.stop]] += 1
+    if subseq in dictionary_of_sub_sequences:
+        dictionary_of_sub_sequences[subseq] += 1
     else:
-        dictionary_of_sub_sequences[record.seq[args.start:args.stop]] = 1
+        dictionary_of_sub_sequences[subseq] = 1
 print()
 print('Summary:')
 for key,value in dictionary_of_sub_sequences.items():
@@ -80,14 +88,15 @@ for key,value in dictionary_of_sub_sequences.items():
 counter = 0
 for record in alignment:
     counter += 1
+    subseq = str(record.seq[args.start:args.stop])
     if args.limit:
         if counter > args.limit:
             break
-    if record.seq[args.start:args.stop] == checker:
+    if subseq == checker:
         print("%s - %s" % (replacer, record.id))
     else:
-        print("%s - %s" % (record.seq[args.start:args.stop], record.id))
-
+        print("%s - %s" % (subseq, record.id))
 
 if len(dictionary_of_sub_sequences) == 1:
     print('Wow, all these sequences are the same!')
+

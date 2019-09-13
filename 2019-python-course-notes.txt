@@ -317,3 +317,39 @@ Press Ctrl+U while in a webbrowser to view the source code for a webpage.
 
 In the case where line is not an integer, yielding a ValueError, python will now catch the exception proceeding with the code under "except ValueError:"
 
+Notes for programming course, 13.09.2019 (Day 5)
+
+Python testing notes
+
+with open(filename) as fp:
+	Class_name.function(fp)
+
+is better than 
+
+fp = filename
+Class_name.function(fp)
+ 
+because the file is closed after being called in the first case, as opposed to using a permanent variable assignment.
+ 
+To perform testing in python, write a class containing test functions. (see text-extractor.py for details)
+
+By running the pytest module, you can test your code without instantiating classes or calling functions.
+ 
+from io import StringIO
+
+The StringIO class is useful because String('string') can be assigned to a variable that will be read as if the 'string' is in its own file.
+i.e. it is a good way of doing testing by feeding a program that normally accepts file input, to give it test strings without adding new files.
+
+\n in a python string creates a new line.
+
+assert variable >= 0 #if this statement is False, an error will be raised.
+
+To call tests in the command line, use pytest to run a testing program that calls a class or program from another file.
+
+ipython can be called in the command line, to provide a good interface for running individual lines of code.
+
+jupyter provides an ipython-like interface using a local webserver. This allows you to easily share graphics and code via URL.
+
+The python module matplotlib allows you to generate graphs and plots from your data in a high-throughput manner.
+
+The python module pandas provides even more useful ways to interact with large datasets (e.g. read .csv or .xlsx files in one line of code).

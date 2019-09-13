@@ -16,8 +16,7 @@ class SubsequenceExtractor:
                     try:
                         start, stop = line.split('-')
                     except ValueError:
-                        print('Could not parse line %r!' % origLine)
-                        print('No n here %r' % origLine)
+                        raise ValueError('Could not parse line %r!' % origLine)
                     try:
                         # Are they ints?  Error check.
                         start = int(start)
@@ -45,4 +44,6 @@ class SubsequenceExtractor:
     def extract(self, sequence):
         for start, stop in self.offsets:
             subsequence = sequence[start:stop]
-            yield (start, stop, subsequence)
+            # Make sure that the subsequence is of the expected length
+            if len(subsequence) == (stop - start):
+                yield (start, stop, subsequence)

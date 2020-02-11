@@ -6,10 +6,9 @@ The below will be expanded on during the course. It's far from complete.
 
 ## Description of course, aims, beliefs, etc.
 
-Broad range of students in the class. Help each other. Many of you came at
-this with no background & taught yourselves (e.g., Sam, Eppie). Be
-generous.  Close the gaps. Make yourselves into a little community. Self
-support, teach, etc.
+Broad range of students in the class. Help each other. Be generous.  Close
+the gaps. Make yourselves into a little community. Self support, teach,
+etc.
 
 Solve problems just over the horizon of what you can do without programming.
 
